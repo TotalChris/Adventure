@@ -1,0 +1,20 @@
+public class roomX{
+    public static void enter(){
+
+    }
+    public static void north(){
+
+    }
+    public static void south(){
+    
+    }
+    public static void east(){
+
+    }
+    public static void west(){
+
+    }
+    pickup?(){
+        
+    }
+}

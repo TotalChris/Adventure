@@ -1,0 +1,147 @@
+Introduction
+
+"Your friend is entering the Michigan Tech Esports team and needs a computer that he can rely on to help him win the tournament. 
+However, both of you are poor college students and do not have the funds to pay for this gaming computer. 
+Instead of saving up and potentially not participating this year, you decide to steal parts from a local supplier. 
+You must steal the best possible parts from the supplier and not get caught in the process.
+Good luck!"
+
+
+
+
+
+HV GPU Room (Room 1) linked to room 2
+
+    Before entering the room:
+    "To proceed: please enter the 4 digit passcode to enter the room"
+    If fail: "Wrong passcode"
+    If correct: "Thank you, welcome to the High Value GPU Room"
+
+    Requirements:
+    Number Combo
+
+    "As you enter, you see over the top reflections on every surface, real-time god rays shine down from the ceiling……...FUUUUUTTUUURRE!!!
+    You have the option to GET a RTX 2080 Ti.
+    Your only exit lies to the EAST."
+
+    Items:
+    RTX2080Ti
+
+    Actions:
+    GET_RTX2080Ti - "You drop the RX 580 and pick up the 2080 Ti in all its beauty."
+
+    Movement Options:
+    GO_EAST
+
+
+
+
+GPU Room (Room 2) linked to room 1, 5
+
+    "As you walk through the door, you see your reflection on the wall, why did they make everything so darn shiny!?! 
+    As you move through the world starts to feel even slower, but at least it looks pretty.
+    You have the option to GET a AMD RX 580.
+    Your movement options lie to the WEST and to the SOUTH."
+
+    Items:
+    AMD RX 580
+    NVIDIA GTX 650 
+
+    Actions:
+    GET_AMDRX580 - "The card feels flimsy and small, but you also feel the savings coursing through your veins."
+    GET_NVIDIAGTX650 - "The card feels flimsy and small, but you also feel the savings coursing through your veins."
+
+    Movement Options:
+    GO_WEST
+    GO_SOUTH
+
+MOBO/PSU Room (Room 3) linked to room 6
+
+    "You enter a room filled with motherboards and power supplies.
+    Nothing awaits to surprise you, however, there is a piece of paper with something written on it.
+    You have the option to LOOK at the PAPER.
+    Your movement options are to the SOUTH."
+
+    Items:
+    EVGA 1000G
+
+    Actions:
+    GET_EVGA1000G
+    LOOK_PAPER - "It has a series of numbers that reads 1267. You might need those later."
+
+    Movement Options:
+    GO_SOUTH
+
+CPU Room (Room 4) linked to room 5, 7
+
+    "As you enter you see stacks of boxes that contain what looks to be CPUs.
+    However, they do not appear to be of high value.
+    "
+    Items:
+    Intel pentium CPU
+
+    Actions:
+    Get_Pentium
+    
+    Movement Options:
+    GO_SOUTH
+    GO_EAST
+
+Cart Room (Room 5) linked to room 2, 4, 6, 8
+
+    "You feel blinded by a ridiculous amount of rgb lights, who designed this place? 
+    To the side you see a cart, looks like a good place to put computer parts!
+    "
+
+    Items:
+    none 
+    
+    Actions:
+    Place_Item
+
+    Movement Options:
+    GO_EAST
+    GO_NORTH
+    GO_SOUTH
+    GO_WEST
+
+Ram/Case (Room 6) linked to room room 5, 3, 9
+    
+    "You walk into a room with towering ceilings, along the walls are massive shelves lined with boxes big and small. 
+    After some searching you find one labeled case and another called ram."
+
+    Actions:
+    Get_Case
+    Get_Ram
+
+    Movement Options:
+    GO_NORTH
+    GO_SOUTH
+    GO_WEST
+
+High Value CPU Room (Room 7) linked to room 4
+
+    "The room is lit by a dim blue glow, the room smells stale as though no engineering has happened here in quite a while.
+    On a shelf you see a box that says Intel *Strikethough* Skylake, kaby lake...Coffee Lake 9900k. Guess this will do.
+    "
+
+    Actions:
+    Get_Intel9900k
+
+    Movement Options:
+    GO_NORTH
+
+Entrance Room (Room 8) linked to room 5
+
+    "You enter the warehouse where the computer parts are stored.
+    The feel is dark and musty, as if it is only cleaned every few weeks.
+    There is a toolbox sitting in the corner that contains various tools, one of which is a screwdriver.
+    Your only option is north through a door into a brighter room."
+
+    Items:
+    none 
+
+    Movement Options:
+    GO_NORTH
+
+    Security Room (Room 9) linked to room 6
