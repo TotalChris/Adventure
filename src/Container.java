@@ -154,4 +154,7 @@ public class Container extends Item{
         return response;
     }
 
+    public boolean isFull() {
+        return contents.size() == capacity;
+    }
 }

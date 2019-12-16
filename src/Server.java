@@ -28,8 +28,8 @@ public class Server implements ConnectionListener {
 					adventureServer.sendMessage(e.getConnectionID(), "%CLOSE");
 					break;
 				case TRANSMISSION_RECEIVED:
-					adventureServer.sendMessage ( e.getConnectionID ( ), String.format (
-							  "MESSAGE RECEIVED: connectionId=%d, data=%s", e.getConnectionID ( ), e.getData ( ) ) );
+					//adventureServer.sendMessage ( e.getConnectionID ( ), String.format (
+					//		  "MESSAGE RECEIVED: connectionId=%d, data=%s", e.getConnectionID ( ), e.getData ( ) ) );
 					adventureServer.sendMessage(e.getConnectionID(), games.get(e.getConnectionID()).processCommand(e.getData()));
 					adventureServer.sendMessage(e.getConnectionID(), "%CLOSE");
 					break;
