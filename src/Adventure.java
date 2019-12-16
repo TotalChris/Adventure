@@ -92,10 +92,16 @@ public class Adventure {
                 } catch (ItemNotFoundException e) {
                     e.printStackTrace();
                 }
+                room1.addEvent(new GameEvent("PICK UP", () -> {
+                    try{
+                        
+                    }
+                }));
+
                 room1.addEvent(new GameEvent("LOOK", () -> {
                     try {
                         Container pressurePlate = ((Container)room1.getItemByName("Pressure Plate"));
-                        return "On the table in front of you, you see a " + pressurePlate.getFirstItem().getName() + ". It is resting on a plate that looks shinier than the rest.";
+                        return "On the table in front of you, you see a " + pressurePlate.getFirstItem().getName() + ". It is resting on a plate that looks shinier than the rest of the table.";
                     } catch (ContainerEmptyException e) {
                         return ""; //TODO: ending
                     } catch (ItemNotFoundException e){
