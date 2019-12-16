@@ -20,7 +20,7 @@ public class AdventureClient {
 				while (true) {
 					while (true) {
 						s = fromServer.readLine ();
-						if (s.equals("")) {break;}
+						if (s.equals("%CLOSE")) {break;}
 						System.out.println ( s );
 					}
 					while(true){

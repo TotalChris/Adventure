@@ -4,8 +4,7 @@
 // 
 // Last modification date : October 07, 1997
 //
-public class Exit 
-{
+public class Exit {
 	// Numerical codes
 	public static final int UNDEFINED = 0;
 	public static final int NORTH = 1;

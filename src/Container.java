@@ -142,5 +142,16 @@ public class Container extends Item{
             throw new ContainerEmptyException();
         }
     }
+    public String getAllItemsString(String containerName){
+        String response = "";
+        Vector<Item> itemList = this.getAllItem();
+        for (Item item : itemList) {
+            response += "There is a | " + item.getName() + " | in the | " + containerName + " |.\n";
+            if(item instanceof Container){
+                response += ((Container)item).getAllItemsString(item.getName());
+            }
+        }
+        return response;
+    }
 
 }

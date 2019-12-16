@@ -254,4 +254,18 @@ public class Location {
         }
         return null;
     }
+    public String getAllItemsString(){
+        String response = "";
+        Vector<Item> itemList = this.getAllItem();
+        if(itemList.size() == 0){
+            return "There is nothing in the room.";
+        }
+        for (Item item : itemList) {
+            response += "There is a | " + item.getName() + " | in the room.\n";
+            if(item instanceof Container){
+                response += ((Container)item).getAllItemsString(item.getName());
+            }
+        }
+        return response;
+    }
 }

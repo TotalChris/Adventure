@@ -48,7 +48,6 @@ public class Adventure {
      * @param room The new room to move to. The new room must be a Location.
      * @return The next room's description, to be printed by the calling method.
      *
-     * @see Location
      */
     public String moveToRoom(Location room) {
         if(room != null) {
@@ -63,7 +62,6 @@ public class Adventure {
      * together via each room's 'exits' vector.
      */
     public void init(){
-                rooms = new Vector<>();
                 hand = new Container(1,"Hand");
                 //construct the game
                 room1 = new Location("High-Value GPU Stockroom");
@@ -93,21 +91,14 @@ public class Adventure {
                     e.printStackTrace();
                 }
                 room1.addEvent(new GameEvent("PICK UP", () -> {
-                    try{
-                        
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room1.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room1.getAllItem(), 0, room1);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
                     }
+                    return moveToRoom(pickUpItems);
                 }));
-
-                room1.addEvent(new GameEvent("LOOK", () -> {
-                    try {
-                        Container pressurePlate = ((Container)room1.getItemByName("Pressure Plate"));
-                        return "On the table in front of you, you see a " + pressurePlate.getFirstItem().getName() + ". It is resting on a plate that looks shinier than the rest of the table.";
-                    } catch (ContainerEmptyException e) {
-                        return ""; //TODO: ending
-                    } catch (ItemNotFoundException e){
-                        return ""; //TODO: ending
-                    }
-                }));
+                room1.addEvent(new GameEvent("LOOK", () -> room1.getAllItemsString()));
                 room1.addEvent(new GameEvent("DROP", () -> {
                     String tempName = "";
                     try{
@@ -136,25 +127,6 @@ public class Adventure {
                         return "You place the " + tempName + " on the table next to the |NVIDIA RTX 2080 TI|";
                     }
                 }));
-                room1.addEvent(new GameEvent("PICK UP NVIDIA RTX 2080 TI", () -> {
-                    try{
-                        Container pressurePlate = (Container) room1.getItemByName("Pressure Plate");
-                        pressurePlate.getItemByName("WEIGHT");
-                        try {
-                            hand.addItem(pressurePlate.getItemByName("NVIDIA RTX 2080 TI"));
-                            pressurePlate.removeItem(pressurePlate.getItemByName("NVIDIA RTX 2080 TI"));
-                        } catch(ContainerFullException e){
-                            return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                        } catch(ItemNotFoundException e){
-                            return "The |NVIDIA RTX 2080 TI| is not on the table.";
-                        }
-                        return "You picked up the |NVIDIA RTX 2080 TI|";
-                    } catch(ContainerEmptyException e) { //if nothing is on the pressure plate
-                        return ""; //TODO: ending
-                    } catch(ItemNotFoundException e){ //if the weight isn't on the pressure plate
-                        return ""; //TODO: ending
-                    }
-                }));
                 room1.addEvent(new GameEvent("GO EAST", () -> {
                     return moveInDirection(Exit.EAST);
                 }));
@@ -174,14 +146,15 @@ public class Adventure {
                 room2.placeItem(new Item("AMD RX 580")); //place the items in the room, or in a container in the room
                 room2.placeItem(new Item("NVIDIA GTX 650"));
                 room2.placeItem(new Item("WEIGHT"));
-                room2.addEvent(new GameEvent("LOOK", () -> {
-                    String response = "";
-                    Vector<Item> itemList = room2.getAllItem();  
-                    for (Item item : itemList) {
-                        response += "There is a |" + item.getName() + "| in the room";
+                room2.addEvent(new GameEvent("PICK UP", () -> {
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room2.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room2.getAllItem(), 0, room2);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
                     }
-                    return response;
+                    return moveToRoom(pickUpItems);
                 }));
+                room2.addEvent(new GameEvent("LOOK", () -> room2.getAllItemsString()));
                 room2.addEvent(new GameEvent("DROP", () -> {
                     String tempName = "";
                     try{
@@ -195,26 +168,6 @@ public class Adventure {
                     } catch(ItemNotFoundException e){
                         return "You drop the " + tempName + ".";
                     }
-                }));
-                room2.addEvent(new GameEvent("PICK UP AMD RX 580", () -> {
-                    try {
-                        hand.addItem(room2.getItemByName("AMD RX 580"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The |AMD RX 580| is not avialable for pick up";
-                    }
-                    return "You picked up the |AMD RX 580|";
-                }));
-                room2.addEvent(new GameEvent("PICK UP NVIDIA GTX 650", () -> {
-                    try {
-                        hand.addItem(room2.getItemByName("NVIDIA GTX 650"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The |NVIDIA GTX 650| is not on the table.";
-                    }
-                    return "You picked up the |NVIDIA GTX 650|";
                 }));
                 room2.addEvent(new GameEvent("GO WEST", () -> {
                     return moveInDirection(Exit.WEST);
@@ -251,26 +204,15 @@ public class Adventure {
                         return "You drop the " + tempName + ".";
                     }
                 }));
-                room3.addEvent(new GameEvent("PICK UP MOTHERBOARD", () -> {
-                    try {
-                        hand.addItem(room3.getItemByName("Motherboard"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The Motherboard is not avialable for pick up";
+                room3.addEvent(new GameEvent("PICK UP", () -> {
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room3.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room3.getAllItem(), 0, room3);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
                     }
-                    return "You picked up the Motherboard";
+                    return moveToRoom(pickUpItems);
                 }));
-                room3.addEvent(new GameEvent("PICK UP POWER SUPPLY", () -> {
-                    try {
-                        hand.addItem(room3.getItemByName("Power Supply"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The Power Supply is not avialable for pickup.";
-                    }
-                    return "You picked up the Power Supply";
-                }));
+                room3.addEvent(new GameEvent("LOOK", () -> room3.getAllItemsString()));
                 room3.addEvent(new GameEvent("GO SOUTH", () -> {
                     return moveInDirection(Exit.SOUTH);
                 }));
@@ -301,16 +243,15 @@ public class Adventure {
                         return "You drop the " + tempName + ".";
                     }
                 }));
-                room4.addEvent(new GameEvent("PICK UP Intel pentium CPU", () -> {
-                    try {
-                        hand.addItem(room4.getItemByName("Intel pentium CPU"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The Intel pentium CPU is not avialable for pick up";
+                room4.addEvent(new GameEvent("PICK UP", () -> {
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room4.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room4.getAllItem(), 0, room4);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
                     }
-                    return "You picked up the Intel pentium CPU";
+                    return moveToRoom(pickUpItems);
                 }));
+                room4.addEvent(new GameEvent("LOOK", () -> room4.getAllItemsString()));
                 room4.addEvent(new GameEvent("GO SOUTH", () -> {
                     return moveInDirection(Exit.SOUTH);
                 }));
@@ -330,6 +271,15 @@ public class Adventure {
                 room5.addExit(new Exit(Exit.SOUTH, room8));
                 room5.setDescription("You feel blinded by a ridiculous amount of rgb lights, who designed this place? \n" +
                 "To the side you see a cart, looks like a good place to put computer parts! \n" + "There are no parts in this room but there is a weight for some reason.");
+                room5.addEvent(new GameEvent("PICK UP", () -> {
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room5.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room5.getAllItem(), 0, room5);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
+                    }
+                    return moveToRoom(pickUpItems);
+                }));
+                room5.addEvent(new GameEvent("LOOK", () -> room5.getAllItemsString()));
                 room5.addEvent(new GameEvent("DROP", () -> {
                     String tempName = "";
                     try{
@@ -385,26 +335,15 @@ public class Adventure {
                         return "You drop the " + tempName + ".";
                     }
                 }));
-                room6.addEvent(new GameEvent("PICK UP RAM", () -> {
-                    try {
-                        hand.addItem(room6.getItemByName("RAM"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The RAM is not avialable for pick up";
+                room6.addEvent(new GameEvent("PICK UP", () -> {
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room6.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room6.getAllItem(), 0, room6);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
                     }
-                    return "You picked up the RAM";
+                    return moveToRoom(pickUpItems);
                 }));
-                room6.addEvent(new GameEvent("PICK UP Case", () -> {
-                    try {
-                        hand.addItem(room6.getItemByName("Case"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The Case is not avialable for pick up";
-                    }
-                    return "You picked up the Case";
-                }));
+                room6.addEvent(new GameEvent("LOOK", () -> room6.getAllItemsString()));
                 room6.addEvent(new GameEvent("GO SOUTH", () -> {
                     return moveInDirection(Exit.SOUTH);
                 }));
@@ -440,19 +379,17 @@ public class Adventure {
                         return "You drop the " + tempName + ".";
                     }
                 }));
-                room7.addEvent(new GameEvent("PICK UP Intel 9900K", () -> {
-                    try {
-                        hand.addItem(room7.getItemByName("Intel 9900K"));
-                    } catch(ContainerFullException e){
-                        return "You are already carrying the " + hand.getAllItem().get(0).getName() + ".";
-                    } catch(ItemNotFoundException e){
-                        return "The Intel 9900K is not avialable for pick up";
+                room7.addEvent(new GameEvent("PICK UP", () -> {
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room7.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room7.getAllItem(), 0, room7);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
                     }
-                    return "You picked up the Intel 9900K";
+                    return moveToRoom(pickUpItems);
                 }));
+                room7.addEvent(new GameEvent("LOOK", () -> room7.getAllItemsString()));
                 room7.addEvent(new GameEvent("GO NORTH", () -> {
-                    moveInDirection(Exit.NORTH);
-                    return "";
+                    return moveInDirection(Exit.NORTH);
                 }));
                 
 
@@ -466,6 +403,16 @@ public class Adventure {
                         "The feel is dark and musty, as if it is only cleaned every few weeks.\n" +
                         "There is a toolbox sitting in the corner that contains various tools, one of which is a screwdriver.\n" +
                         "Your only option is north through a door into a brighter room.");
+                room8.placeItem(new Item("SCREWDRIVER"));
+                room8.addEvent(new GameEvent("PICK UP", () -> {
+                    Option pickUpItems = new Option("PICK UP", generateItemList(room8.getAllItem()));
+                    Vector<GameEvent> tempEvents = generateItemEventsList(room8.getAllItem(), 0, room8);
+                    for (GameEvent event: tempEvents) {
+                        pickUpItems.addEvent(event);
+                    }
+                    return moveToRoom(pickUpItems);
+                }));
+                room8.addEvent(new GameEvent("LOOK", () -> room8.getAllItemsString()));
                 room8.addEvent(new GameEvent("GO NORTH", () -> {
                     return moveInDirection(Exit.NORTH);
                  }));
@@ -477,7 +424,7 @@ public class Adventure {
                  * 
                  */
                 room9.addExit(new Exit(Exit.NORTH, room6));
-
+                rooms = new Vector<>();
                 rooms.add(room1);
                 rooms.add(room2);
                 rooms.add(room3);
@@ -500,6 +447,75 @@ public class Adventure {
 
     public void end() {
     }
+
+    public String generateItemList(Vector<Item> items){
+        String result = "";
+        Vector<String> itemOptions = generateItemStringList("ROOM", items, 0);
+        for (String opt: itemOptions) {
+            result += opt;
+        }
+        return result;
+    }
+    public Vector<String> generateItemStringList(String locationName, Vector<Item> items, int startFrom){
+        int runningCount = startFrom;
+        Vector<String> list = new Vector<>();
+        for (Item item: items) {
+            if(item instanceof Container){
+                Vector<String> tempList = generateItemStringList(item.getName(), ((Container)item).getAllItem(), runningCount);
+                runningCount += tempList.size();
+                list.addAll(tempList);
+            } else {
+                list.add((runningCount + 1) + ".) There is a |" + item.getName() + "| in |" + locationName + "|.\n");
+                runningCount++;
+            }
+        }
+        return list;
+    }
+    public Vector<GameEvent> generateItemEventsList(Vector<Item> items, int startFrom, Location room){
+        int runningCount = startFrom;
+        Vector<GameEvent> events = new Vector<>();
+        for (Item item: items) {
+            if(item instanceof Container){
+                Vector<GameEvent> tempList = generateItemEventsList(((Container)item).getAllItem(), runningCount, room);
+                runningCount += tempList.size();
+                events.addAll(tempList);
+            } else {
+                events.add(new GameEvent(Integer.toString(runningCount), () -> {
+                    if(hand.isEmpty()){
+                        try {
+                            moveToRoom(room);
+                            return "You are already carrying the " + hand.getFirstItem() + ".";
+                        } catch (ContainerEmptyException e) {
+                            try {
+                                hand.addItem(item);
+                                items.remove(item);
+                                moveToRoom(room);
+                                return "You got the | " + item.getName() + " |.";
+                            } catch (ContainerFullException ex) {
+                                ex.printStackTrace();
+                                moveToRoom(room);
+                                return " ";
+                            }
+                        }
+                    } else {
+                        try {
+                            hand.addItem(item);
+                        } catch (ContainerFullException e) {
+                            e.printStackTrace();
+                            moveToRoom(room);
+                            return " ";
+                        }
+                        items.remove(item);
+                        moveToRoom(room);
+                        return "You got the | " + item.getName() + " |.";
+                    }
+                }));
+                runningCount++;
+            }
+        }
+        return events;
+    }
+
 }
 
 
