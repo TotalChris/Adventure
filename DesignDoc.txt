@@ -1,0 +1,34 @@
+(20 points) Describe the scenario: the first step in creating an Adventure program is to come up with a scenario, or setting, for the Adventure. 
+The scenario should give a background to the Adventure as well as provide the Adventurer with a main goal to accomplish.
+    Your friend is entering the Michigan Tech Esports team and needs a computer that he can rely on to help him win the tournament. 
+    However, both of you are poor college students and do not have the funds to pay for this gaming computer. 
+    Instead of saving up and potentially not participating this year, you decide to steal parts from a local supplier. 
+    You must steal the best possible parts from the supplier and not get caught in the process. 
+    But you must be wary of the guard patrolling the security cameras. 
+    If you get caught, then the penalty is jail time for your character and losing the game. 
+    However, if you do escape, then your friend participates in the tournament and wins.
+
+(20 points) Describe puzzles/obstacles: The second step in creating an Adventure is the formation of puzzles and obstacles which the Adventurer must solve 
+and overcome in order to achieve his main goal.
+    The player needs to find all the pc parts to build his friends computer. However, there is a security camera roaming the building, 
+    everyime the player moves the camera moves to another room, if the player and the security camera are in the same room the player loses.
+    There is a security room where the player can disable the security camera, however it is maned by a static security guard. If the player has armed themselves with
+    a weapon (a screw driver is offered in the first room), they can knock the guard out, however if they try to engage the guard without any weapons they will be arrested and
+    lose the game. Additionally in the graphics card room there is a pressure plate under the gpu and a weight needs to be placed under on it to avoid getting caught.
+
+(20 points) Demo Paths: Provide the grader with two demo paths. A demo path is a sequence of commands used to chart a path through the game. The first demo path should lead to the player’s demise. The second demo path should lead to victory.
+
+    Failure:
+        don’t pick up the screwdriver→ move North→  move east→ move south→  end.
+        Lose Condition: Player runs into the security guard without a weapon(screwdriver)
+
+    High Score: 
+        pick up screwdriver→ Move north→ move west→ Don’t pick up cpu→ move south→ pick up second cpu→ move north→ Move west→ Move north→ 
+    
+        Don’t pick up gpu→ Move West→ Pick up 2080ti→ Move west→ Move south→ Drop parts in Cart→ Move East→ Pick up case→ Move West→ 
+    
+        Drop off case→ Move east→ Pick up ram→ Move West→ Drop off RAM→ Move east→ Move south→ Fight Guard→ Press the Red button→ Move north→ 
+    
+        Move North→ Pick up Motherboard→ Pick up Power supply→ Move south → Drop off parts→ Move South → Leave
+    
+        Win Condition: Player collects all the pc parts and drops them in the cart

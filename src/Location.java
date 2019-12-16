@@ -231,13 +231,13 @@ public class Location {
      * @param name The name string to look for
      * @return The item that has that name. If no item is found, returns null.
      */
-    public Item getItemByName(String name){
+    public Item getItemByName(String name) throws ItemNotFoundException{
         for (Item i: items) {
             if(i.getName().equals(name)){
                 return i;
             }
         }
-        return null;
+        throw new ItemNotFoundException(name);
     }
 
     /**

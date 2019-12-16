@@ -75,8 +75,7 @@ MOBO/PSU Room (Room 3) linked to room 6
 CPU Room (Room 4) linked to room 5, 7
 
     "As you enter you see stacks of boxes that contain what looks to be CPUs.
-    However, they do not appear to be of high value.
-    "
+    However, they do not appear to be of high value."
     Items:
     Intel pentium CPU
 

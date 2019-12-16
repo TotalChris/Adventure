@@ -23,9 +23,13 @@ public class AdventureClient {
 						if (s.equals("")) {break;}
 						System.out.println ( s );
 					}
-					System.out.print("> ");
-					System.out.flush ();
-					if ((s=keyboardInput.readLine ()) == null) { break; }
+					while(true){
+						System.out.print("> ");
+						System.out.flush ();
+						s = keyboardInput.readLine();
+						if (s.equals("")) {continue;} else {break;}
+					}
+					if (s == null) { break; }
 					toServer.println ( s );
 				}
 				fromServer.close ();
