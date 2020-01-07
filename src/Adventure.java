@@ -5,7 +5,6 @@ public class Adventure {
 
     Location currentRoom;
     Location globalRoom;
-    Vector<Location> rooms;
     Location room1;
     Location room2;
     Location room3;
@@ -110,6 +109,7 @@ public class Adventure {
                  * 
                  */
                 room2.addExit(new Exit(Exit.SOUTH, room5));
+                room2.addExit(new Exit(Exit.WEST, room1));
                 room2.setDescription("As you walk through the door, you see your reflection on the wall, why did they make everything so darn shiny!?! \n" +
                 "As you move through the world starts to feel even slower, but at least it looks pretty. \n" +
                 "You have the option to GET a AMD RX 580. \n" +
@@ -193,7 +193,7 @@ public class Adventure {
                 room7.setDescription("The room is lit by a dim blue glow, the room smells stale as though no engineering has happened here in quite a while \n" +
                 "On a shelf you see a box that says Intel *Strikethough* Skylake, kaby lake...Coffee Lake 9900k. Guess this will do.");
                 room7.placeItem(new Item("Intel 9900K")); //place the items in the room, or in a container in the room
-                
+                room7.addEvent(new GameEvent("GO NORTH", () -> moveInDirection(Exit.NORTH)));
 
                  /**
                  * 
@@ -217,16 +217,27 @@ public class Adventure {
                  * 
                  */
                 room9.addExit(new Exit(Exit.NORTH, room6));
-                rooms = new Vector<>();
-                rooms.add(room1);
-                rooms.add(room2);
-                rooms.add(room3);
-                rooms.add(room4);
-                rooms.add(room5);
-                rooms.add(room6);
-                rooms.add(room7);
-                rooms.add(room8);
-                rooms.add(room9);
+                room9.setDescription("");
+                room9.addEvent(new GameEvent("STAB", () -> {
+                    try {
+                        if (hand.getFirstItem().getName().equals("SCREWDRIVER")) {
+                            return "Stabby stab";
+                        } else {
+                            try {
+                                return "You cannot stab with a(n) " + hand.getFirstItem().getName() + ".\n" + "He now shoves you out of his room and slams the door.\n" + moveInDirection(Exit.NORTH);
+                            } catch (ContainerEmptyException e) {
+                                e.printStackTrace();
+                                return "";
+                            }
+
+                        }
+                    } catch (ContainerEmptyException e) {
+                        e.printStackTrace();
+                        return "";
+                    }
+                }));
+                room9.addEvent(new GameEvent("GO NORTH", () -> moveInDirection(Exit.NORTH)));
+
     }
 
     private String whereAmI(Location room) {
